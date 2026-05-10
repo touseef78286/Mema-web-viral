@@ -25,13 +25,13 @@ const permanentMarker = Permanent_Marker({
 });
 
 export const metadata: Metadata = {
-  title: "Secret Voice Message (meme mode)",
-  description: "Chaotic, funny, colorful secret voice messages.",
   verification: {
     other: {
       monetag: "014671716b9432308077a457cd7bab43",
     },
   },
+  title: "Secret Voice Message (meme mode)",
+  description: "Chaotic, funny, colorful secret voice messages.",
 };
 
 export default function RootLayout({
