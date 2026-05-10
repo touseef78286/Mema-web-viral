@@ -27,7 +27,7 @@ const permanentMarker = Permanent_Marker({
 export const metadata: Metadata = {
   verification: {
     other: {
-      monetag: "014671716b9432308077a457cd7bab43",
+      monetag: "34e8ea2e0a8f97378f7456759a543e2d",
     },
   },
   title: "Secret Voice Message (meme mode)",
@@ -45,7 +45,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${anton.variable} ${permanentMarker.variable} h-full antialiased`}
     >
       <head>
-        <meta name="monetag" content="014671716b9432308077a457cd7bab43" />
+        <meta name="monetag" content="34e8ea2e0a8f97378f7456759a543e2d" />
       </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
