@@ -48,6 +48,7 @@ const DOODLES = [
 export default function MasterPage() {
   const router = useRouter();
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
@@ -198,14 +199,25 @@ export default function MasterPage() {
                 <span className="pencil-label font-marker">
                   Secret password
                 </span>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(event) => setPassword(event.target.value)}
-                  disabled={busy}
-                  placeholder="type it here..."
-                  className="scribble-input w-full px-1 pb-4 pt-2 font-marker text-2xl text-black outline-none placeholder:text-black/35 disabled:opacity-60"
-                />
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(event) => setPassword(event.target.value)}
+                    disabled={busy}
+                    placeholder="type it here..."
+                    className="scribble-input w-full px-1 pb-4 pt-2 pr-14 font-marker text-2xl text-black outline-none placeholder:text-black/35 disabled:opacity-60"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    disabled={busy}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-black/60 hover:text-black disabled:opacity-60 transition font-marker text-2xl"
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                  >
+                    {showPassword ? "👁️" : "👁️‍🗨️"}
+                  </button>
+                </div>
               </label>
 
               {error ? (

@@ -6,5 +6,5 @@ export const AD_URL =
 
 // Permanent master record id (created in Supabase)
 export const MASTER_ID = "00000000-0000-0000-0000-000000000000";
-export const MASTER_PASSWORD = "zenith69";
+export const MASTER_PASSWORD = "Zuze1t09";
 

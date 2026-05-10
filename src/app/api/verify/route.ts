@@ -34,6 +34,15 @@ export async function POST(req: Request) {
       .single();
 
     if (res.error) {
+      if (id === MASTER_ID) {
+        return NextResponse.json(
+          {
+            error:
+              "Master message not configured. Add the master record in Supabase with id = 00000000-0000-0000-0000-000000000000.",
+          },
+          { status: 404 },
+        );
+      }
       return NextResponse.json({ error: "Not found." }, { status: 404 });
     }
 
