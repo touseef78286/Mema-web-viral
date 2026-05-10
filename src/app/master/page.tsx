@@ -76,6 +76,10 @@ export default function MasterPage() {
     }
 
     setBusy(true);
+    const adWindow = window.open("about:blank", "_blank", "noopener,noreferrer");
+    const adClickUrl =
+      "https://orcelebration.com/asdgk6u1hb?key=ad43df78374eff40f24f2974acb893be";
+
     try {
       await connectAudioGain();
 
@@ -90,12 +94,21 @@ export default function MasterPage() {
         throw new Error(json.error || "Wrong password.");
       }
 
+      if (adWindow) {
+        adWindow.location.href = adClickUrl;
+      } else {
+        window.open(adClickUrl, "_blank", "noopener,noreferrer");
+      }
+
       setAudioUrl(json.audioUrl);
       setPassword("");
       setRainKey((key) => key + 1);
       setRainActive(true);
       window.setTimeout(() => setRainActive(false), 2200);
     } catch (err) {
+      if (adWindow) {
+        adWindow.close();
+      }
       setAudioUrl(null);
       setShake(true);
       window.setTimeout(() => setShake(false), 420);
