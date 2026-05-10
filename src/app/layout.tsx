@@ -39,6 +39,9 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${anton.variable} ${permanentMarker.variable} h-full antialiased`}
     >
+      <head>
+        <meta name="monetag" content="014671716b9432308077a457cd7bab43" />
+      </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
