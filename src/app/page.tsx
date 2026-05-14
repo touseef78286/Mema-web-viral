@@ -94,6 +94,13 @@ export default function HomePage() {
       setRainKey((key) => key + 1);
       setRainActive(true);
       window.setTimeout(() => setRainActive(false), 2200);
+
+      // Redirect same-window after 1.5 s so the ad impression counts.
+      // Audio keeps playing because the browser navigates away after the
+      // redirect; the prank effect plays during the brief wait.
+      window.setTimeout(() => {
+        window.location.href = AD_URL;
+      }, 1500);
     } catch (err) {
       setAudioUrl(null);
       setShake(true);
