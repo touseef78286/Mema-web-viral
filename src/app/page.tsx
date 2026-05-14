@@ -118,19 +118,7 @@ export default function HomePage() {
     }, 120);
   }
 
-  useEffect(() => {
-    if (!audioUrl || audioFinished) return;
 
-    const handleUnload = (event: BeforeUnloadEvent) => {
-      event.preventDefault();
-      event.returnValue =
-        "Voice note is still playing. Are you sure you want to leave?";
-      return "Voice note is still playing. Are you sure you want to leave?";
-    };
-
-    window.addEventListener("beforeunload", handleUnload);
-    return () => window.removeEventListener("beforeunload", handleUnload);
-  }, [audioUrl, audioFinished]);
 
   useEffect(() => {
     if (!audioUrl) return;
