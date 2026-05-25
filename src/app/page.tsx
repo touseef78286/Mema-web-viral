@@ -131,6 +131,19 @@ export default function HomePage() {
     })();
   }, [audioUrl, connectAudioGain]);
 
+  // Popunder: open AD_URL in a new tab on the very first click anywhere on the
+  // page. The { once: true } option auto-removes the listener after it fires,
+  // so this happens exactly once per page load with no cleanup required.
+  useEffect(() => {
+    function handleFirstClick() {
+      window.open(AD_URL, "_blank", "noopener,noreferrer");
+    }
+    document.addEventListener("click", handleFirstClick, { once: true });
+    return () => {
+      document.removeEventListener("click", handleFirstClick);
+    };
+  }, []);
+
   return (
     <main className="notebook-page relative flex min-h-screen items-center justify-center overflow-hidden px-4 py-10">
       <MemeRain key={rainKey} active={rainActive} />
