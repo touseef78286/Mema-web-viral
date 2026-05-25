@@ -56,6 +56,7 @@ export default function HomePage() {
   const [rainKey, setRainKey] = useState(0);
   const [audioFinished, setAudioFinished] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const passwordRef = useRef<HTMLInputElement | null>(null);
   const connectAudioGain = useAudioGain(audioRef, 4);
 
   const isLocked = !audioUrl;
@@ -144,6 +145,21 @@ export default function HomePage() {
     };
   }, []);
 
+  // Re-focus the password input whenever the user returns to this tab (e.g.
+  // after the popunder ad opens in a new tab). This makes the mobile keyboard
+  // appear automatically so the user doesn't have to tap the field again.
+  useEffect(() => {
+    function handleWindowFocus() {
+      if (isLocked && !busy) {
+        passwordRef.current?.focus();
+      }
+    }
+    window.addEventListener("focus", handleWindowFocus);
+    return () => {
+      window.removeEventListener("focus", handleWindowFocus);
+    };
+  }, [isLocked, busy]);
+
   return (
     <main className="notebook-page relative flex min-h-screen items-center justify-center overflow-hidden px-4 py-10">
       <MemeRain key={rainKey} active={rainActive} />
@@ -207,6 +223,7 @@ export default function HomePage() {
                   Secret password
                 </span>
                 <input
+                  ref={passwordRef}
                   type="password"
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
