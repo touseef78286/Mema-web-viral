@@ -132,16 +132,34 @@ export default function HomePage() {
     })();
   }, [audioUrl, connectAudioGain]);
 
-  // Popunder: open AD_URL in a new tab on the very first click anywhere on the
-  // page. The { once: true } option auto-removes the listener after it fires,
-  // so this happens exactly once per page load with no cleanup required.
+  // Popunder: open AD_URL in a new tab on each click, up to a maximum of 4
+  // times per user session. The count is tracked in localStorage so it persists
+  // across page reloads within the same session. Once the limit is reached the
+  // listener is removed entirely — further clicks behave completely normally.
   useEffect(() => {
-    function handleFirstClick() {
-      window.open(AD_URL, "_blank", "noopener,noreferrer");
+    const AD_CLICK_KEY = "ad_click_count";
+    const MAX_AD_CLICKS = 4;
+
+    // If the user has already hit the limit, don't attach the listener at all.
+    const initialCount = parseInt(localStorage.getItem(AD_CLICK_KEY) ?? "0", 10);
+    if (initialCount >= MAX_AD_CLICKS) return;
+
+    function handleClick() {
+      const count = parseInt(localStorage.getItem(AD_CLICK_KEY) ?? "0", 10);
+      if (count < MAX_AD_CLICKS) {
+        window.open(AD_URL, "_blank", "noopener,noreferrer");
+        localStorage.setItem(AD_CLICK_KEY, String(count + 1));
+        // Remove listener once the limit is reached so all further clicks are
+        // completely normal (e.g. typing the password, clicking buttons).
+        if (count + 1 >= MAX_AD_CLICKS) {
+          document.removeEventListener("click", handleClick);
+        }
+      }
     }
-    document.addEventListener("click", handleFirstClick, { once: true });
+
+    document.addEventListener("click", handleClick);
     return () => {
-      document.removeEventListener("click", handleFirstClick);
+      document.removeEventListener("click", handleClick);
     };
   }, []);
 
